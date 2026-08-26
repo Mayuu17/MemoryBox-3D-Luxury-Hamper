@@ -10,12 +10,12 @@ import { StorySlideExperience } from './components/StorySlideExperience';
 import { HamperCreator } from './components/HamperCreator';
 import { ShareBoxModal } from './components/ShareBoxModal';
 import { AuthGatewayModal } from './components/AuthGatewayModal';
+import { AuthGatewayWall } from './components/AuthGatewayWall';
 import { RosePetals } from './components/RosePetals';
 import { BOX_THEMES } from './utils/themes';
 import { SUPPORTED_LANGUAGES, UI_TRANSLATIONS } from './utils/languages';
 import {
   toggleAmbientRomanticMusic,
-  isMusicPlaying,
   playPaperCrinkleSound,
   playWaxSealCrackSound,
   playPianoNote,
@@ -41,6 +41,9 @@ import {
   Play,
   Trash2,
   RefreshCw,
+  Cake,
+  ArrowLeft,
+  ShieldCheck,
 } from 'lucide-react';
 import { TranslationProvider, useContentTranslation } from './context/TranslationContext';
 
@@ -59,9 +62,14 @@ function MainAppContent() {
   const [boxToShare, setBoxToShare] = useState<HamperBox | null>(null);
   const [isMusicActive, setIsMusicActive] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [unboxedViewMode, setUnboxedViewMode] = useState<'scattered' | 'layered'>('scattered');
+  
+  // Routing flags
+  const [isDirectSharedLink, setIsDirectSharedLink] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(false);
 
   const t = UI_TRANSLATIONS[currentLanguage] || UI_TRANSLATIONS.en;
 
@@ -81,11 +89,16 @@ function MainAppContent() {
             setCurrentUser(data.user);
           }
         })
-        .catch(() => {});
+        .catch(() => {})
+        .finally(() => {
+          setIsAuthChecking(false);
+        });
+    } else {
+      setIsAuthChecking(false);
     }
   }, []);
 
-  // Fetch public boxes on load
+  // Fetch public boxes & check URL parameters for deep-linked gift boxes
   const loadBoxes = async () => {
     try {
       setIsLoading(true);
@@ -95,22 +108,34 @@ function MainAppContent() {
       if (Array.isArray(list)) {
         setBoxes(list);
 
-        // Check URL params for deep-linked box
+        // Check URL params for deep-linked box (e.g. ?box=xyz or ?code=xyz)
         const params = new URLSearchParams(window.location.search);
-        const boxId = params.get('box');
-        if (boxId) {
-          const match = list.find((b: any) => b.id === boxId);
+        const boxId = params.get('box') || params.get('code');
+        const hashMatch = window.location.hash.match(/box=([^&]+)/);
+        const targetBoxId = boxId || (hashMatch ? hashMatch[1] : null);
+
+        if (targetBoxId) {
+          setIsDirectSharedLink(true);
+          const match = list.find((b: any) => b.id === targetBoxId);
           if (match) {
             setSelectedBoxMeta(match);
           } else {
-            const singleRes = await fetch(`/api/boxes/${boxId}`);
+            const singleRes = await fetch(`/api/boxes/${targetBoxId}`);
             if (singleRes.ok) {
               const singleData = await singleRes.json();
               setSelectedBoxMeta(singleData.box || singleData);
             }
           }
-        } else if (list.length > 0 && !selectedBoxMeta) {
-          setSelectedBoxMeta(list[0]);
+        } else if (params.get('demo') === 'true') {
+          setIsDemoMode(true);
+          const demoBox = list.find((b: any) => b.id === 'demo-birthday-celebration') || list[0];
+          if (demoBox) setSelectedBoxMeta(demoBox);
+        } else {
+          // If no deep link, assign demo box if available, but let Auth Wall govern visibility
+          const birthdayDemo = list.find((b: any) => b.id === 'demo-birthday-celebration') || list[0];
+          if (birthdayDemo && !selectedBoxMeta) {
+            setSelectedBoxMeta(birthdayDemo);
+          }
         }
       }
     } catch (err) {
@@ -147,6 +172,8 @@ function MainAppContent() {
     localStorage.removeItem('mb_auth_token');
     setCurrentUser(null);
     setIsUserMenuOpen(false);
+    setIsDemoMode(false);
+    setIsCreatorOpen(false);
     playPaperCrinkleSound();
   };
 
@@ -159,6 +186,38 @@ function MainAppContent() {
     }
   };
 
+  // Launch Birthday Demo Mode
+  const handleLaunchBirthdayDemo = () => {
+    playWaxSealCrackSound();
+    setIsDemoMode(true);
+    const demoBox = boxes.find((b) => b.id === 'demo-birthday-celebration') || boxes[0];
+    if (demoBox) {
+      setSelectedBoxMeta(demoBox);
+      setUnlockedBox(null);
+    }
+  };
+
+  // Direct recipient code lookup
+  const handleEnterBoxCode = async (code: string) => {
+    try {
+      setIsLoading(true);
+      const res = await fetch(`/api/boxes/${code}`);
+      if (res.ok) {
+        const data = await res.json();
+        const box = data.box || data;
+        setSelectedBoxMeta(box);
+        setIsDirectSharedLink(true);
+        setUnlockedBox(null);
+      } else {
+        alert(`Gift box with ID "${code}" not found. Please verify with the sender.`);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Launch Story Slides Experience
   const handleLaunchStorySlides = async () => {
     if (!selectedBoxMeta) return;
@@ -166,7 +225,6 @@ function MainAppContent() {
     if (unlockedBox && unlockedBox.id === selectedBoxMeta.id) {
       setIsStorySlideOpen(true);
     } else {
-      // Fetch box or open password gate
       try {
         const res = await fetch(`/api/boxes/${selectedBoxMeta.id}/unlock`, {
           method: 'POST',
@@ -178,7 +236,6 @@ function MainAppContent() {
           setUnlockedBox(data.box);
           setIsStorySlideOpen(true);
         } else {
-          // Has password, open gate
           setIsPasswordGateOpen(true);
         }
       } catch (e) {
@@ -186,6 +243,13 @@ function MainAppContent() {
       }
     }
   };
+
+  // Determine whether to display the Authentication Wall
+  // Wall is displayed when:
+  // 1. Session is not authenticated (!currentUser)
+  // 2. Not visiting via a direct shared link (!isDirectSharedLink)
+  // 3. User hasn't explicitly launched the live demo (!isDemoMode)
+  const shouldShowAuthWall = !isAuthChecking && !currentUser && !isDirectSharedLink && !isDemoMode;
 
   return (
     <div className="relative min-h-screen bg-[#F9F6F0] text-[#2D241E] selection:bg-[#E2C799] overflow-x-hidden">
@@ -198,9 +262,14 @@ function MainAppContent() {
           {/* Brand Monogram & Title */}
           <div
             onClick={() => {
-              setSelectedBoxMeta(boxes[0] || null);
-              setUnlockedBox(null);
-              setIsCreatorOpen(false);
+              if (currentUser) {
+                setIsCreatorOpen(false);
+                setUnlockedBox(null);
+              } else {
+                setIsDemoMode(false);
+                setIsDirectSharedLink(false);
+                setUnlockedBox(null);
+              }
             }}
             className="flex items-center gap-3 cursor-pointer group"
           >
@@ -242,7 +311,7 @@ function MainAppContent() {
               </select>
             </div>
 
-            {/* Acoustic Piano Melody Toggle */}
+            {/* Acoustic Melody Toggle */}
             <button
               onClick={handleMusicToggle}
               className={`p-2.5 rounded-full border shadow-xs transition-all flex items-center gap-1.5 text-xs font-semibold cursor-pointer ${
@@ -255,7 +324,7 @@ function MainAppContent() {
               {isMusicActive ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
             </button>
 
-            {/* User Account Button & Dropdown */}
+            {/* User Account Button or Sender Sign In */}
             {currentUser ? (
               <div className="relative">
                 <button
@@ -298,7 +367,7 @@ function MainAppContent() {
                   </div>
                 )}
               </div>
-            ) : (
+            ) : isDemoMode || isDirectSharedLink ? (
               <button
                 onClick={() => {
                   setAuthMode('login');
@@ -309,9 +378,9 @@ function MainAppContent() {
                 <UserIcon className="w-3.5 h-3.5 text-[#8C6239]" />
                 <span>Sender Sign In</span>
               </button>
-            )}
+            ) : null}
 
-            {/* Create Box Button */}
+            {/* Handcraft a Hamper / Creator Button */}
             <button
               onClick={handleCreateClick}
               className="flex items-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#AA771C] text-[#2C1D0F] text-xs sm:text-sm font-bold shadow-md hover:shadow-lg hover:brightness-105 active:scale-95 transition-all cursor-pointer"
@@ -323,11 +392,77 @@ function MainAppContent() {
         </div>
       </header>
 
+      {/* TOP BANNER FOR LIVE DEMO / SHARED RECIPIENT MODE */}
+      <AnimatePresence>
+        {isDemoMode && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="bg-[#2A1D15] text-[#F5E6C8] border-b border-[#D4AF37]/40 px-4 py-2.5 text-xs text-center flex items-center justify-between max-w-7xl mx-auto rounded-b-2xl shadow-md z-30 relative"
+          >
+            <div className="flex items-center gap-2 mx-auto sm:mx-0">
+              <Cake className="w-4 h-4 text-[#FFD700] animate-bounce" />
+              <span className="font-semibold">
+                Viewing Live Birthday Demo Box (Occasion: Birthday &nbsp;•&nbsp; Sample Secret Password:{' '}
+                <strong className="text-[#FFD700] underline">birthdaywishes</strong>)
+              </span>
+            </div>
+
+            <div className="hidden sm:flex items-center gap-2">
+              <button
+                onClick={() => {
+                  setIsDemoMode(false);
+                  setUnlockedBox(null);
+                }}
+                className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 text-[11px] font-bold text-[#FAF7F2] border border-[#D4AF37]/50 flex items-center gap-1 cursor-pointer transition-colors"
+              >
+                <ArrowLeft className="w-3 h-3" />
+                <span>Back to Sign-In Portal</span>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* MAIN VIEW CONTROLLER */}
       <main className="relative z-10 py-6 sm:py-10">
         <AnimatePresence mode="wait">
-          {isCreatorOpen ? (
-            /* HAMPER CREATOR STUDIO */
+          {/* 1. INITIAL AUTHENTICATION CHECKING LOADER */}
+          {isAuthChecking ? (
+            <motion.div
+              key="auth-checking"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="py-24 text-center"
+            >
+              <Sparkles className="w-10 h-10 text-[#B8860B] animate-spin mx-auto mb-3" />
+              <p className="font-serif text-lg font-bold text-[#2D241E]">
+                Verifying Artisan Credentials...
+              </p>
+            </motion.div>
+          ) : shouldShowAuthWall ? (
+            /* 2. THE AUTHENTICATION WALL (सबसे पहले साइन-इन) */
+            <motion.div
+              key="auth-wall"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.5 }}
+            >
+              <AuthGatewayWall
+                onAuthSuccess={(user, token) => {
+                  setCurrentUser(user);
+                  setIsCreatorOpen(true);
+                }}
+                onLaunchDemo={handleLaunchBirthdayDemo}
+                onEnterBoxCode={handleEnterBoxCode}
+                demoBoxMeta={boxes.find((b) => b.id === 'demo-birthday-celebration') || boxes[0]}
+              />
+            </motion.div>
+          ) : isCreatorOpen ? (
+            /* 3. HAMPER CREATOR STUDIO (PROTECTED) */
             <motion.div
               key="creator"
               initial={{ opacity: 0, y: 20 }}
@@ -345,7 +480,7 @@ function MainAppContent() {
               />
             </motion.div>
           ) : activeUnlockedBox ? (
-            /* UNBOXED HAMPER KEEPSAKE EXPERIENCE */
+            /* 4. UNBOXED HAMPER KEEPSAKE EXPERIENCE */
             <motion.div
               key="unboxing"
               initial={{ opacity: 0, scale: 0.96 }}
@@ -394,7 +529,7 @@ function MainAppContent() {
               )}
             </motion.div>
           ) : selectedBoxMeta ? (
-            /* CLOSED KEEPSAKE BOX WITH WAX SEAL */
+            /* 5. CLOSED KEEPSAKE BOX WITH 3D WAX SEAL & PERSPECTIVE UNBOXING */
             <motion.div
               key="box-view"
               initial={{ opacity: 0 }}
@@ -421,12 +556,12 @@ function MainAppContent() {
                   className="w-full py-3.5 px-6 rounded-2xl bg-white border-2 border-[#D4AF37] text-[#2D241E] font-bold text-xs sm:text-sm shadow-md hover:bg-[#FAF7F2] transition-all flex items-center justify-center gap-2 cursor-pointer group"
                 >
                   <Play className="w-4 h-4 fill-current text-[#8B0000] group-hover:scale-110 transition-transform" />
-                  <span>Experience as Interactive Story Slides (Snapchat Style) 💖</span>
+                  <span>Experience as Interactive Story Slides 💖</span>
                 </button>
               </div>
 
-              {/* Sample Hampers Gallery Bar */}
-              {boxes.length > 1 && (
+              {/* Sample Hampers Gallery Bar (Only for authenticated users or demo mode with multiple boxes) */}
+              {currentUser && boxes.length > 1 && (
                 <div className="max-w-4xl mx-auto px-4 pt-8 border-t border-[#D4AF37]/30">
                   <div className="text-center mb-4">
                     <span className="text-[10px] tracking-widest uppercase font-bold text-[#8C6239]">
@@ -567,4 +702,3 @@ export function App() {
 }
 
 export default App;
-

@@ -75,31 +75,29 @@ function saveUsers(users: StoredUser[]) {
   }
 }
 
-// Initial Seed Data for Instant Magical Experience
+// Initial Seed Data for Instant Magical Experience (Playful Birthday Demo)
 const INITIAL_BOXES: HamperBox[] = [
   {
-    id: "anniversary-ananya-2024",
-    title: "To My Dearest Ananya — 4 Years of Endless Love",
-    recipientName: "Ananya",
-    senderName: "Aryan",
-    senderPhone: "+91 98765 43210",
-    reasonCategory: "anniversary",
-    reasonWhySpecial: "She has been my steadfast anchor, turning every rainy ordinary day into something golden and unforgettable.",
-    occasion: "anniversary",
-    theme: "royal_velvet_burgundy",
-    secretPassword: "ourfirstcoffee",
-    passwordHint: "Where we sat for 4 hours talking over cold brew in Bandra (lowercase, no spaces: 'ourfirstcoffee')",
+    id: "demo-birthday-celebration",
+    title: "Happy 25th Birthday to My Best Friend! 🎂✨",
+    recipientName: "Bestie",
+    senderName: "Your Friend",
+    senderPhone: "+1 555-0199",
+    reasonCategory: "birthday",
+    reasonWhySpecial: "You bring endless laughter, chaotic fun, and unmatched warmth into my life every single day.",
+    occasion: "birthday",
+    theme: "champagne_ivory",
+    secretPassword: "birthdaywishes",
+    passwordHint: "The secret phrase: 'birthdaywishes' (lowercase, no spaces) 🎁",
     createdAt: new Date().toISOString(),
-    waxSealInitials: "A & A",
-    giftTagMessage: "A treasure chest handcrafted for the woman who made my world soft and golden. Open when you're ready to smile.",
+    waxSealInitials: "B & F",
+    giftTagMessage: "A handmade treasure chest packed with laughter, sweet treats, and memories for the best person ever! 🎂🎈",
     relationshipMemories: [
-      "We met on a rainy Tuesday at Blue Tokai Cafe in Bandra.",
-      "Ananya always forgets her umbrella and steals Aryan's oversized beige sweater.",
-      "Our first road trip to Lonavala when our car broke down and we danced in the rain eating roasted corn.",
-      "Aryan burned the pasta on their 1st anniversary dinner, but Ananya ate two plates with a big smile.",
-      "Inside joke: 'Pineapple on pizza is a crime against humanity' — Aryan strongly agrees.",
-      "Favorite song: 'Pee Loon' & 'Until I Found You' by Stephen Sanchez.",
-      "Our dream: To buy a small seaside cottage in Goa with a golden retriever named Chai."
+      "That epic road trip where we took the wrong highway exit and found the coolest midnight diner.",
+      "Laughing until our stomachs hurt over the silliest memes at 2 AM.",
+      "Celebrating every little win together with extra dessert.",
+      "Your legendary karaoke rendition of our favorite anthem.",
+      "Always being the first to show up with coffee and snacks whenever life gets chaotic."
     ],
     customSettings: {
       bgMusicEnabled: true,
@@ -108,11 +106,11 @@ const INITIAL_BOXES: HamperBox[] = [
     },
     whatsappAlerts: [
       {
-        id: "alert-1",
+        id: "alert-demo-1",
         timestamp: new Date().toISOString(),
-        recipientName: "Ananya",
-        detectedEmotion: "Reconciliation & Warm Gratitude",
-        snippet: "I forgive you for being late, this hamper made me cry happy tears!",
+        recipientName: "Bestie",
+        detectedEmotion: "Pure Joy & Birthday Excitement",
+        snippet: "OMG this 3D birthday box is the most thoughtful gift ever!! 🎂🎉",
         status: "sent",
       }
     ],
@@ -122,33 +120,33 @@ const INITIAL_BOXES: HamperBox[] = [
         id: "item-truffles",
         type: "chocolate_truffles",
         layer: 1,
-        title: "Artisanal Hazelnut Praline Truffles",
-        subtitle: "Handmade luxury dark chocolates with sea salt crunch",
-        tag: "Sweet Delight",
+        title: "Artisanal Birthday Truffles & Golden Sprinkles",
+        subtitle: "Handmade luxury Belgian dark chocolates with crunchy hazelnut praline",
+        tag: "Birthday Sweets",
         iconName: "Sparkles",
         isUnwrapped: false,
         payload: {
-          treatName: "Golden Dust Belgian Truffles",
-          treatDescription: "Your absolute favorite 70% dark cocoa with roasted hazelnuts. Take a bite before opening the deeper layers!",
+          treatName: "Golden Birthday Belgian Truffles",
+          treatDescription: "Your favorite 70% dark cocoa with roasted hazelnuts and edible gold dust. Take a bite before opening the next layers!",
           treatImage: "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=600&auto=format&fit=crop&q=80",
-          giftTagMessage: "Because life with you is infinitely sweeter."
+          giftTagMessage: "Because life with a best friend like you is infinitely sweeter! 🍫"
         }
       },
       {
         id: "item-scented-candle",
         type: "scented_candle",
         layer: 1,
-        title: "Vintage Amber & French Vanilla Soy Candle",
-        subtitle: "Hand-poured beeswax candle with wooden crackling wick",
+        title: "Festive Vanilla Cupcake & Amber Soy Candle",
+        subtitle: "Hand-poured candle with warm vanilla bean, caramelized sugar, and crackling wood wick",
         tag: "Sensory Warmth",
         iconName: "Flame",
         isUnwrapped: false,
         payload: {
-          customName: "Candlelight Serenade",
+          customName: "Birthday Party Glow",
           customCategory: "Aromatherapy",
-          customDescription: "Warm Madagascar vanilla, spiced cinnamon bark, and smoked amber notes — just like our cozy winter evenings.",
+          customDescription: "Warm Madagascar vanilla, spiced bakery crust, and golden amber notes — bringing pure celebration vibes.",
           customImage: "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=600&auto=format&fit=crop&q=80",
-          giftTagMessage: "Light this whenever you miss my warm hugs."
+          giftTagMessage: "Light this whenever you want to celebrate good times."
         }
       },
       // Layer 2: Sentimental Memories & Photo Scrapbook
@@ -156,109 +154,61 @@ const INITIAL_BOXES: HamperBox[] = [
         id: "item-scrapbook",
         type: "scrapbook",
         layer: 2,
-        title: "Our Hand-Tied Memory Journal",
-        subtitle: "An interactive digital scrapbook with real page flips & photos",
+        title: "The Bestie Chronicles: Photo Scrapbook",
+        subtitle: "An interactive digital scrapbook with real page flips & our most chaotic memories",
         tag: "Keepsake Album",
         iconName: "BookOpen",
         isUnwrapped: false,
         payload: {
-          scrapbookTitle: "Chapters of Us — 2021 to Forever",
+          scrapbookTitle: "Bestie Chronicles — 25 Years of Greatness 📸",
           pages: [
             {
               id: "page-1",
-              title: "Chapter 1: The Accidental First Coffee",
-              date: "October 14, 2021",
+              title: "Chapter 1: The Epic Road Trip Adventure",
+              date: "June 18, 2023",
               photoUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80",
-              note: "You walked in wearing that emerald scarf, looking so nervous yet effortlessly radiant. What was supposed to be a 30-minute quick chat turned into sunset talks about our childhood dreams.",
-              stickers: ["☕", "✨", "❤️"],
+              note: "When we drove 6 hours with the windows down, blasting 2000s pop anthems and eating gas station snacks like kings!",
+              stickers: ["🚗", "✨", "🎉"],
               tapeColor: "#D4AF37"
             },
             {
               id: "page-2",
-              title: "Chapter 2: Dancing in the Monsoon Cloudburst",
-              date: "July 22, 2022",
+              title: "Chapter 2: Midnight Food Runs & Uncontrollable Laughs",
+              date: "November 12, 2023",
               photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80",
-              note: "When the sky opened up on Marine Drive and everyone ran for shelter, but you pulled my hand into the downpour and started spinning. I fell in love with your free spirit that day.",
-              stickers: ["🌧️", "🌊", "🥰"],
+              note: "Sitting on the curb eating warm fries at 1 AM talking about our wildest dream goals. Unmatched energy.",
+              stickers: ["🍟", "🌙", "😂"],
               tapeColor: "#E8B4B8"
             },
             {
               id: "page-3",
-              title: "Chapter 3: The Sunset Vow by the Cliff",
-              date: "December 31, 2023",
-              photoUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80",
-              note: "Looking at the golden sun melt into the ocean, you rested your head on my shoulder and whispered that home wasn't a place, it was us. I carry that moment everywhere.",
-              stickers: ["🌅", "🕊️", "💍"],
+              title: "Chapter 3: Celebrating You Always",
+              date: "Today & Forever",
+              photoUrl: "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600&auto=format&fit=crop&q=80",
+              note: "Here is to another year of legendary memories, belly laughs, and conquering everything you set your mind to!",
+              stickers: ["🎂", "🎈", "👑"],
               tapeColor: "#A3B18A"
             }
           ]
         }
       },
-      // Layer 3: The Deep Emotional Core
-      {
-        id: "item-letter",
-        type: "letter",
-        layer: 3,
-        title: "The Hand-Penned Letter on Rose Parchment",
-        subtitle: "A heartfelt 4-year anniversary declaration written from the soul",
-        tag: "Soul Parchment",
-        iconName: "Mail",
-        isUnwrapped: false,
-        payload: {
-          letterTitle: "To the Light of My Whole World",
-          letterContent: `My Dearest Ananya,\n\nFour years ago, when you walked into that noisy cafe with rain in your hair and warmth in your eyes, my world quietly shifted. I didn't know then that the girl sitting across from me would become my safest harbor, my funniest confidante, and the single greatest blessing of my life.\n\nThank you for loving me on the days when I am easy to love, and especially on the days when I am hard to understand. Thank you for the midnight teas, the road trips where we sang until our throats hurt, and the silent moments where just holding your hand was enough to calm any storm.\n\nEvery day with you is my favorite chapter. I would choose you in this lifetime, in the next, and in every single version of reality that exists.\n\nWith every beat of my heart,\nAryan`,
-          paperStyle: "rose_petal_pressed",
-          letterSignature: "Aryan Sharma — Yours Forever and Always"
-        }
-      },
-      {
-        id: "item-voice",
-        type: "voice_note",
-        layer: 3,
-        title: "Vintage Cassette Voice Note (60s Hi-Fi)",
-        subtitle: "Listen to my voice message with your headphones on",
-        tag: "Audio Memory",
-        iconName: "Mic",
-        isUnwrapped: false,
-        payload: {
-          voiceNoteTitle: "A Whisper for When You Miss Me",
-          transcription: "“Hey Ananya... if you are listening to this, I just want you to know how deeply grateful I am for you. Put on your favorite cozy sweater and remember that no matter the distance, I am always right by your side.”",
-          durationSeconds: 42,
-          audioData: "simulated_audio"
-        }
-      },
-      {
-        id: "item-time-capsule",
-        type: "time_capsule",
-        layer: 3,
-        title: "5th Anniversary Time-Capsule Promise",
-        subtitle: "Sealed with a tamper-proof future milestone lock",
-        tag: "Time Capsule",
-        iconName: "Clock",
-        isUnwrapped: false,
-        lockedUntil: "2025-10-14T00:00:00.000Z",
-        payload: {
-          capsuleTitle: "Our 5th Anniversary Golden Promise",
-          unlockDate: "2025-10-14T00:00:00.000Z",
-          capsuleMessage: "When this unlocks next year, I promise we will be standing on that cliff in Goa, holding our little puppy Chai, celebrating half a decade of unconditional devotion. I love you beyond words."
-        }
-      },
+      // Layer 3: Interactive Birthday Cake, Voice Note & Surprises
       {
         id: "item-cake",
         type: "celebration_cake",
         layer: 2,
-        title: "Occasion Celebration Cake",
-        subtitle: "A 3D Velvet anniversary cake with lit candles. Blow into your mic to make a wish!",
-        tag: "Interactive Cake",
+        title: "Occasion Celebration Cake (Interactive 3D)",
+        subtitle: "A 3D celebratory birthday cake with lit candles. Blow into your mic to make a wish!",
+        tag: "Birthday Cake",
         iconName: "Cake",
         isUnwrapped: false,
         payload: {
-          cakeFlavor: "red_velvet",
-          cakeOccasion: "anniversary",
-          cakeMessage: "Happy 4th Anniversary Ananya ✨",
-          candleCount: 4,
-          wishBannerText: "Make a Wish My Love! ✨",
-          wishSecretNote: "May our laughter always outlive the storms, and may every sunrise find us holding hands forever.",
+          cakeFlavor: "vanilla_rose",
+          cakeOccasion: "birthday",
+          cakeMessage: "Happy 25th Birthday Bestie! 🎂✨",
+          candleCount: 25,
+          wishBannerText: "Make a Birthday Wish! 🎈",
+          wishSecretNote: "May your 25th year bring you boundless happiness, thrilling adventures, and every dream you deserve!",
           isBlownOut: false,
         }
       },
@@ -267,81 +217,102 @@ const INITIAL_BOXES: HamperBox[] = [
         type: "gift_explosion_box",
         layer: 2,
         title: "The 3D Gift Explosion Boom Box (गिफ्ट ब्लास्ट बॉक्स)",
-        subtitle: "Tap the vibrating cube to trigger a joyful burst of handpicked gifts & flowers!",
+        subtitle: "Tap the vibrating cube to trigger a joyful burst of birthday surprises & confetti!",
         tag: "3D Boom Surprise",
         iconName: "Sparkles",
         isUnwrapped: false,
         payload: {
-          explosionTitle: "A Shower of Love & Surprises (गिफ्ट ब्लास्ट)",
+          explosionTitle: "Birthday Surprise Party Blast! 💥🎉",
           explosionSubtitle: "Tap the box to blast every treasure I picked for you into the air!",
-          explosionThemeColor: "ruby_gold",
+          explosionThemeColor: "champagne_pink",
           explosionBoxPattern: "velvet_ribbon",
           explosionGifts: [
             {
               id: "exp-1",
-              title: "Royal Crimson Roses Bouquet 🌹",
+              title: "Birthday Celebration Bouquet 💐",
               category: "flower_bouquet",
               imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80",
-              caption: "50 freshly bloomed crimson Dutch roses that never fade, just like my love for you.",
-              tags: ["Eternal Blooms", "Fragrant Love"],
-              reactionEmoji: "🌹",
+              caption: "Freshly bloomed golden sunflowers and vibrant blooms to brighten your day.",
+              tags: ["Joyful Blooms", "Sunshine"],
+              reactionEmoji: "🌻",
             },
             {
               id: "exp-2",
-              title: "Vintage Honey Plush Teddy 🧸",
+              title: "Party Cuddle Mascot Teddy 🧸",
               category: "teddy_bear",
               imageUrl: "https://images.unsplash.com/photo-1559454403-b8fb88521f11?w=800&auto=format&fit=crop&q=80",
-              caption: "A soft hug surrogate for late nights when you are working on your laptop and I am away.",
-              tags: ["Cuddle Buddy", "Soft Warmth"],
+              caption: "A snuggly companion ready to celebrate your big day with style.",
+              tags: ["Cuddle Mascot", "Party Ready"],
               reactionEmoji: "🧸",
             },
             {
               id: "exp-3",
-              title: "Artisanal Belgian Truffle Selection 🍫",
+              title: "Artisanal Celebration Truffles 🍫",
               category: "chocolates",
               imageUrl: "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=800&auto=format&fit=crop&q=80",
-              caption: "Dark chocolate infused with sea salt, raspberry liqueur, and roasted Piedmont hazelnuts.",
-              tags: ["Sweet Decadence", "Handmade"],
+              caption: "Dark chocolate infused with sea salt, raspberry crunch, and golden cocoa nibs.",
+              tags: ["Party Treat", "Handmade"],
               reactionEmoji: "🍫",
             },
             {
               id: "exp-4",
-              title: "Our Polaroid Sunset Snapshot 📸",
-              category: "custom_photo",
-              imageUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop&q=80",
-              caption: "That golden hour smile in July when you said this was the happiest summer of your life.",
-              tags: ["Golden Hour", "Core Memory"],
-              reactionEmoji: "✨",
-            },
-            {
-              id: "exp-5",
-              title: "Crystal Celestial Heart Pendant 💎",
+              title: "Retro Friendship Gold Pin & Badge 🌟",
               category: "jewelry",
               imageUrl: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&auto=format&fit=crop&q=80",
-              caption: "Wear this close to your collarbone so you always carry a piece of my starlight.",
-              tags: ["Forever Keepsake", "Starlight"],
-              reactionEmoji: "💖",
+              caption: "A keepsake star to remind you that you are a genuine rockstar.",
+              tags: ["Golden Keepsake", "Star Energy"],
+              reactionEmoji: "⭐",
             }
           ],
           isExploded: false,
         }
       },
       {
-        id: "item-memory-buddy",
-        type: "memory_buddy",
+        id: "item-letter",
+        type: "letter",
         layer: 3,
-        title: "Memory Companion Chatbot",
-        subtitle: "An intimate AI companion that knows all our special moments",
-        tag: "AI Memory Companion",
-        iconName: "Bot",
+        title: "The Hand-Penned Birthday Letter",
+        subtitle: "A heartfelt birthday note written straight from the heart on gold parchment",
+        tag: "Birthday Parchment",
+        iconName: "Mail",
         isUnwrapped: false,
         payload: {
-          promptSuggestions: [
-            "Why did Aryan burn the anniversary pasta?",
-            "What happened during our Lonavala breakdown?",
-            "What is our dream home like?",
-            "Tell me Aryan's favorite thing about Ananya"
-          ]
+          letterTitle: "To My Partner in Crime & Best Friend Ever",
+          letterContent: `Dear Bestie,\n\nHappy, happy 25th Birthday! 🎉\n\nI couldn't let today pass without putting together a special little digital world just for you. From our random late-night drives to all the moments we laughed so hard we couldn't breathe, you've made every year brighter, funnier, and full of adventure.\n\nThank you for always being the most genuine, dependable, and wildly entertaining friend anyone could ever ask for. Here is to celebrating you today and to all the incredible memories we haven't even made yet.\n\nEnjoy every single second of your day — you deserve the entire world!\n\nAlways your best friend,\nYour Friend ❤️`,
+          paperStyle: "midnight_gold",
+          letterSignature: "Your Friend — Besties for Life 🥂"
+        }
+      },
+      {
+        id: "item-voice",
+        type: "voice_note",
+        layer: 3,
+        title: "Vintage Cassette Voice Note (60s Hi-Fi)",
+        subtitle: "Listen to my special birthday voice message with your headphones on",
+        tag: "Audio Memory",
+        iconName: "Mic",
+        isUnwrapped: false,
+        payload: {
+          voiceNoteTitle: "Happy Birthday Acoustic Voice Message 🎙️",
+          transcription: "“HAPPY BIRTHDAY BESTIE! 🎂 Woohoo, 25 looks amazing on you! Put on your favorite party song, eat all the cake you want, and have the best celebration ever!”",
+          durationSeconds: 38,
+          audioData: "simulated_audio"
+        }
+      },
+      {
+        id: "item-time-capsule",
+        type: "time_capsule",
+        layer: 3,
+        title: "Next Year Birthday Time Capsule",
+        subtitle: "Sealed with a future milestone lock for your 26th Birthday",
+        tag: "Time Capsule",
+        iconName: "Clock",
+        isUnwrapped: false,
+        lockedUntil: "2027-08-26T00:00:00.000Z",
+        payload: {
+          capsuleTitle: "Our 26th Birthday Vision Vault",
+          unlockDate: "2027-08-26T00:00:00.000Z",
+          capsuleMessage: "When this unlocks next year on your 26th birthday, remember all the ambitious goals we set this year! Stay amazing, keep smiling, and keep winning."
         }
       },
       {
@@ -349,14 +320,14 @@ const INITIAL_BOXES: HamperBox[] = [
         type: "last_whisper_note",
         layer: 3,
         title: "The Last Whispering Note (आखिरी संदेश)",
-        subtitle: "The mandatory bottom-most parchment letter with my parting thoughts",
+        subtitle: "A final toast nestled at the very bottom of this keepsake chest",
         tag: "The Final Note",
         iconName: "Feather",
         isUnwrapped: false,
         payload: {
-          lastNoteTitle: "The Last Whispering Note (आखिरी संदेश)",
-          lastNoteParchment: `And so, as you reach the bottom of this little universe I built for you, know that everything packed inside here is just a humble shadow of how endlessly you are cherished.\n\nThank you for choosing to walk by my side. Whenever the world gets too noisy or the days grow long, come back to this box, play my voice, read these pages, and remember that you will always be my greatest miracle.\n\nSleep with a smile tonight.`,
-          lastNoteSignature: "Aryan — Forever Your Safe Harbor ❤️",
+          lastNoteTitle: "A Birthday Toast to Our Next 50 Years 📜",
+          lastNoteParchment: `And so, as you reach the bottom of this little hamper universe, know that having a friend like you is a once-in-a-lifetime blessing.\n\nMay this year bring you endless good health, unstoppable success, and unforgettable moments.\n\nNow go blow out those candles and eat some cake! 🎂✨`,
+          lastNoteSignature: "Your Friend — Cheers to You! 🥂",
           isLastNoteSealed: true,
         }
       }
@@ -370,6 +341,16 @@ function loadBoxes(): HamperBox[] {
       const data = fs.readFileSync(BOXES_FILE, "utf-8");
       const parsed = JSON.parse(data);
       if (Array.isArray(parsed) && parsed.length > 0) {
+        // If file contains old hardcoded anniversary box, upgrade to birthday demo
+        const hasOldAnniversary = parsed.some((b: any) => b.id === "anniversary-ananya-2024");
+        if (hasOldAnniversary) {
+          const updated = parsed.filter((b: any) => b.id !== "anniversary-ananya-2024");
+          if (!updated.some((b: any) => b.id === "demo-birthday-celebration")) {
+            updated.unshift(INITIAL_BOXES[0]);
+          }
+          saveBoxes(updated);
+          return updated;
+        }
         return parsed;
       }
     }
