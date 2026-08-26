@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    --font-script: 'Great Vibes', 'Alex Brush', cursive;
+    --font-cormorant: 'Cormorant Garamond', serif;
+    --font-cinzel: 'Cinzel', serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #F9F6F0;
+    color: #2D241E;
+    overflow-x: hidden;
+    background-image: 
+      radial-gradient(ellipse at 50% 0%, rgba(245, 230, 200, 0.45) 0%, transparent 60%),
+      radial-gradient(circle at 10% 20%, rgba(226, 199, 153, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+  }
+}
+
+.font-serif-title {
+  font-family: var(--font-serif);
+}
+
+.font-script {
+  font-family: var(--font-script);
+}
+
+.font-cormorant {
+  font-family: var(--font-cormorant);
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel);
+}
+
+/* Luxury Gold & Velvet Accents */
+.gold-foil-border {
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2), inset 0 0 15px rgba(212, 175, 55, 0.12);
+}
+
+.gold-foil-text {
+  background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-glow {
+  box-shadow: 0 12px 35px -10px rgba(184, 134, 11, 0.4);
+}
+
+.luxury-box-shadow {
+  box-shadow: 
+    0 30px 70px -15px rgba(45, 30, 20, 0.35), 
+    0 15px 35px -5px rgba(0, 0, 0, 0.18),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.paper-texture {
+  background-color: #FAF7F2;
+  background-image: 
+    radial-gradient(rgba(180, 160, 140, 0.15) 1px, transparent 0),
+    linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(245,237,224,0.6));
+  background-size: 16px 16px, 100% 100%;
+}
+
+/* Vintage Diary & Notebook Lined Paper */
+.vintage-diary-lines {
+  background-color: #FAF6ED;
+  background-image: 
+    repeating-linear-gradient(
+      transparent,
+      transparent 27px,
+      rgba(212, 175, 55, 0.22) 28px,
+      rgba(212, 175, 55, 0.22) 29px
+    );
+  background-size: 100% 29px;
+  line-height: 29px;
+}
+
+.vintage-diary-margin {
+  border-left: 2px solid rgba(219, 68, 85, 0.35);
+}
+
+/* Handmade Polaroid Frame Styling */
+.polaroid-frame {
+  background: #FFFFFF;
+  padding: 10px 10px 36px 10px;
+  border-radius: 4px;
+  box-shadow: 
+    0 10px 25px -5px rgba(0, 0, 0, 0.18),
+    0 4px 10px -2px rgba(0, 0, 0, 0.08),
+    inset 0 0 4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+}
+
+.polaroid-frame:hover {
+  transform: scale(1.04) rotate(0deg) !important;
+  box-shadow: 
+    0 20px 35px -5px rgba(0, 0, 0, 0.22),
+    0 8px 16px -4px rgba(0, 0, 0, 0.12);
+  z-index: 40;
+}
+
+/* Virtual Colorful Pastel Washi Tapes */
+.washi-tape-rose {
+  background: rgba(244, 187, 196, 0.85);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  clip-path: polygon(0% 0%, 96% 2%, 100% 4%, 97% 96%, 100% 100%, 4% 98%, 0% 96%, 2% 4%);
+}
+
+.washi-tape-sage {
+  background: rgba(188, 214, 192, 0.85);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  clip-path: polygon(2% 0%, 98% 3%, 100% 97%, 97% 100%, 3% 98%, 0% 3%);
+}
+
+.washi-tape-honey {
+  background: rgba(247, 219, 157, 0.85);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  clip-path: polygon(0% 2%, 97% 0%, 100% 98%, 96% 100%, 3% 97%, 0% 99%);
+}
+
+.washi-tape-lavender {
+  background: rgba(216, 203, 235, 0.85);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  clip-path: polygon(3% 0%, 100% 2%, 98% 97%, 95% 100%, 0% 98%, 2% 2%);
+}
+
+.washi-tape-gold {
+  background: linear-gradient(135deg, rgba(230, 198, 114, 0.9), rgba(212, 175, 55, 0.9));
+  box-shadow: 0 2px 6px rgba(184, 134, 11, 0.25);
+  clip-path: polygon(1% 0%, 99% 2%, 98% 98%, 0% 100%);
+}
+
+/* Shredded Crinkle Paper Filler Background Texture */
+.shredded-paper-bedding {
+  background-color: #FDFBF7;
+  background-image: 
+    radial-gradient(rgba(224, 207, 180, 0.35) 1px, transparent 1px),
+    linear-gradient(45deg, rgba(245, 235, 220, 0.6) 25%, transparent 25%, transparent 75%, rgba(245, 235, 220, 0.6) 75%),
+    linear-gradient(45deg, rgba(245, 235, 220, 0.6) 25%, transparent 25%, transparent 75%, rgba(245, 235, 220, 0.6) 75%);
+  background-size: 24px 24px, 16px 16px, 16px 16px;
+  background-position: 0 0, 0 0, 8px 8px;
+}
+
+/* Candlelight Halo & Ambient Animation */
+@keyframes candlelight {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+
+.candlelight-glow {
+  animation: candlelight 4s ease-in-out infinite;
+}
+
+/* Scrapbook flipping simulation & 3D Box Perspective Viewport */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.perspective-1500 {
+  perspective: 1500px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* 3D Chest Depth Shadows */
+.chest-inner-shadow {
+  box-shadow: 
+    inset 0 20px 40px -10px rgba(0, 0, 0, 0.85),
+    inset 0 -20px 40px -10px rgba(0, 0, 0, 0.85),
+    inset 20px 0 40px -10px rgba(0, 0, 0, 0.85),
+    inset -20px 0 40px -10px rgba(0, 0, 0, 0.85);
+}
+
+.chest-rim-gold {
+  box-shadow: 
+    0 0 0 2px rgba(212, 175, 55, 0.7),
+    0 8px 25px rgba(0, 0, 0, 0.5),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4EFE6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4C3A3;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #BFA882;
+}

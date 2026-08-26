@@ -1,0 +1,6 @@
+{
+  "name": "MemoryBox",
+  "description": "A digital, emotion-sharing virtual handmade Hamper Box platform featuring luxury keepsake box unboxing, secret password gates, native multilingual emotion translation with Gemini, audio recordings, time capsule locks, and relationship memory companion.",
+  "requestFramePermissions": ["microphone", "camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
